@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="DiqueMCNick">
+    <output-path>$PROJECT_DIR$/bin</output-path>
+    <root id="archive" name="DiqueMCNick.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="module-output" name="diquemc-nick" />
+    </root>
+  </artifact>
+</component>

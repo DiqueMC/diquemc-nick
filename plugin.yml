@@ -1,0 +1,27 @@
+name: DiqueMCNick
+main: com.diquemc.nick.DiqueMCNick
+version: 0.1
+description: Nick Management
+author: Hector22x
+depend: [DiqueMCJedis, DiqueMCUtils]
+
+commands:
+   nick:
+      description: Set a nickname
+      usage: /<command>
+      permission: diquemcnick.set
+   removenick:
+      alias: [delnick]
+      description: Unset a nickname
+      usage: /<command>
+   nicksreload:
+      permission: diquemcnick.admin
+      description: Reloads all nicks
+      usage: /<command>
+permissions:
+    diquemcnick.set:
+        default: op
+    diquemcnick.remove:
+        default: op
+    diquemcnick.admin:
+        default: op
