@@ -1,8 +1,9 @@
 name: DiqueMCNick
 main: com.diquemc.nick.DiqueMCNick
-version: 0.1
-description: Nick Management
+version: "0.1"
+api-version: "1.14"
 author: Hector22x
+description: Nick Management
 depend: [DiqueMCJedis, DiqueMCUtils]
 
 commands:

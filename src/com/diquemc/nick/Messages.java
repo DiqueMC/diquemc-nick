@@ -2,7 +2,6 @@ package com.diquemc.nick;
 
 
 import org.bukkit.ChatColor;
-import org.jivesoftware.smack.Chat;
 
 public class Messages {
     public static String PREFIX = ChatColor.GOLD + "[DiqueMC Nick] " + ChatColor.RESET;
