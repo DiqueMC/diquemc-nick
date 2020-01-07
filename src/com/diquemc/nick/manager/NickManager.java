@@ -48,6 +48,9 @@ public class NickManager implements DiqueMCJedisListener {
     }
 
     public static void initializePlayer(Player player, boolean isNickUpdate) {
+        if(!player.hasPermission(DiqueMCNick.PERMISSION_SET)) {
+            return;
+        }
         String nickName = getNickForPlayer(player.getName());
         if(nickName == null) {
             nickName = player.getName();
@@ -98,14 +101,12 @@ public class NickManager implements DiqueMCJedisListener {
 
     public static String updateAllNicks() {
         Map<String, String> allNicks = DiqueMCJedis.hgetall(REDIS_KEY);
-        List<String> nicks = new ArrayList<String>();
+        List<String> nicks = new ArrayList<>();
         for( Map.Entry<String,String> player : allNicks.entrySet()) {
             updateNick(player.getKey(), player.getValue());
             nicks.add(ChatColor.translateAlternateColorCodes('&', player.getValue()));
         }
-
         return String.join(ChatColor.YELLOW + ", ", nicks);
-
     }
 
     @Override

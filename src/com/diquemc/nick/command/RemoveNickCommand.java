@@ -9,9 +9,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
+
 public class RemoveNickCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
+    public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, String[] args) {
         if(args.length == 0 && commandSender instanceof Player) {
             return runAsPlayer((Player) commandSender);
         } else if (args.length == 1) {
@@ -39,6 +41,7 @@ public class RemoveNickCommand implements CommandExecutor {
         String playerName = PlayerManager.checkValidPlayer(_playerName);
         if(playerName == null) {
             commandSender.sendMessage(Messages.PLAYER_NOT_FOUND(_playerName));
+            return true;
         }
         NickManager.removeNickForPlayer(playerName);
         commandSender.sendMessage(Messages.NICK_REMOVED(playerName));
