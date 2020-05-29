@@ -4,6 +4,7 @@ import com.diquemc.nick.DiqueMCNick;
 import com.diquemc.nick.Messages;
 import com.diquemc.nick.manager.NickManager;
 import com.diquemc.nick.manager.PlayerManager;
+import me.winterguardian.jsonconverter.JsonMessageSender;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -90,8 +91,15 @@ public class SetNickCommand implements CommandExecutor {
                         + "/nick &1" + commandSender.getName() + ChatColor.YELLOW + " y tu nick sera cambiado a:  " + ChatColor.BLUE + commandSender.getName());
                 commandSender.sendMessage(ChatColor.YELLOW + "No tienes un nick asignado actualmente");
             } else {
-                commandSender.sendMessage(ChatColor.GREEN + "Tu nick actual es: " + ChatColor.AQUA + ChatColor.translateAlternateColorCodes('&', currentNick) + ChatColor.GREEN + "(" + ChatColor.AQUA + "/nick " + currentNick + ChatColor.GREEN + ")");
+                String message = "[{\"text\":\"Tu nick actual es: \",\"color\":\"green\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"Click para copiar el comando\",\"color\":\"green\"},\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"/nick {currentNick}\"},\"extra\":[{\"text\":\"{currentNickConverted}\",\"color\":\"aqua\"},{\"text\":\"(\",\"color\":\"green\"},{\"text\":\"/nick {currentNick}\",\"color\":\"aqua\"},{\"text\":\")\",\"color\":\"green\"}]}]";
+                message = message.replace("{currentNick}", currentNick);
+                message = message.replace("{currentNickConverted}", ChatColor.translateAlternateColorCodes('&', currentNick));
+//                String message = ChatColor.GREEN + "Tu nick actual es: " + ChatColor.AQUA + ChatColor.translateAlternateColorCodes('&', currentNick) + ChatColor.GREEN + "(" + ChatColor.AQUA + "/nick " + currentNick + ChatColor.GREEN + ")";
+//                String json = JsonConverter.toJson(message, "show_text", ChatColor.GREEN + "Click para copiar el comando", "suggest_command", "/nick " + currentNick, "");
+                JsonMessageSender.sendSafeJsonChatMessage((Player) commandSender, message);
 
+//                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + commandSender.getName() + " " + one);
+//                commandSender.sendMessage(ChatColor.GREEN + "Tu nick actual es: " + ChatColor.AQUA + ChatColor.translateAlternateColorCodes('&', currentNick) + ChatColor.GREEN + "(" + ChatColor.AQUA + "/nick " + currentNick + ChatColor.GREEN + ")");
             }
         }
 

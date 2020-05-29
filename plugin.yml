@@ -1,7 +1,7 @@
 name: DiqueMCNick
 main: com.diquemc.nick.DiqueMCNick
 version: "1.0"
-api-version: "1.14"
+api-version: "1.15"
 author: Hector22x
 description: Nick Management
 depend: [DiqueMCJedis, DiqueMCUtils]
@@ -26,3 +26,6 @@ permissions:
         default: op
     diquemcnick.admin:
         default: op
+        children:
+          diquemcnick.set: true
+          diquemcnick.remove: true
