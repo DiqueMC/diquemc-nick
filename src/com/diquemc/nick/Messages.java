@@ -1,7 +1,7 @@
 package com.diquemc.nick;
 
-
-import org.bukkit.ChatColor;
+import com.diquemc.utils.ChatUtil;
+import net.md_5.bungee.api.ChatColor;
 
 public class Messages {
     public static String PREFIX = ChatColor.GOLD + "[DiqueMC Nick] " + ChatColor.RESET;
@@ -12,10 +12,10 @@ public class Messages {
     }
 
     public static String NICK_CHANGED (String nickName) {
-        return PREFIX + ChatColor.GREEN + "Tu nickname ha sido cambiado a " + ChatColor.YELLOW + ChatColor.translateAlternateColorCodes('&', nickName) + ChatColor.GREEN + "!";
+        return PREFIX + ChatColor.GREEN + "Tu nickname ha sido cambiado a " + ChatColor.YELLOW + ChatUtil.translateColorCodes(nickName) + ChatColor.GREEN + "!";
     }
     public static String NICK_CHANGED (String playerName, String nickName) {
-        return PREFIX + ChatColor.GREEN + "El nickname de " + ChatColor.YELLOW + playerName + ChatColor.GREEN + " ha sido cambiado a " + ChatColor.YELLOW + ChatColor.translateAlternateColorCodes('&', nickName) + ChatColor.GREEN + "!";
+        return PREFIX + ChatColor.GREEN + "El nickname de " + ChatColor.YELLOW + playerName + ChatColor.GREEN + " ha sido cambiado a " + ChatColor.YELLOW + ChatUtil.translateColorCodes(nickName) + ChatColor.GREEN + "!";
     }
 
     public static String NICK_REMOVED = ChatColor.GREEN + "Tu nick ha sido removido";

@@ -4,7 +4,8 @@ import com.diquemc.jedis.DiqueMCJedis;
 import com.diquemc.jedis.DiqueMCJedisListener;
 import com.diquemc.jedis.DiqueMCJedisPubSub;
 import com.diquemc.nick.DiqueMCNick;
-import org.bukkit.ChatColor;
+import com.diquemc.utils.ChatUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ import java.util.Map;
 
 
 public class NickManager implements DiqueMCJedisListener {
-    private static String CHANEL_NICKMANAGER = "DiqueMCNick";
-    private static String REDIS_KEY = "diquemc-nick";
+    private static final String CHANEL_NICKMANAGER = "DiqueMCNick";
+    private static final String REDIS_KEY = "diquemc-nick";
 
     public static String getNickForPlayer(String playerName) {
         return DiqueMCJedis.hget(REDIS_KEY, playerName.toLowerCase());
@@ -31,7 +32,7 @@ public class NickManager implements DiqueMCJedisListener {
     }
 
     private static String getParsedNickName(String nickNameString) {
-        String nickName = ChatColor.translateAlternateColorCodes('&', nickNameString);
+        String nickName = ChatUtil.translateColorCodes(nickNameString);
         if (nickName.charAt(nickName.length() - 1) == '§') {
             nickName = nickName.substring(0, nickName.length() - 1);
         }
@@ -104,7 +105,7 @@ public class NickManager implements DiqueMCJedisListener {
         List<String> nicks = new ArrayList<>();
         for( Map.Entry<String,String> player : allNicks.entrySet()) {
             updateNick(player.getKey(), player.getValue());
-            nicks.add(ChatColor.translateAlternateColorCodes('&', player.getValue()));
+            nicks.add(ChatUtil.translateColorCodes(player.getValue()));
         }
         return String.join(ChatColor.YELLOW + ", ", nicks);
     }

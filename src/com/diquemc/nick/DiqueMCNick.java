@@ -5,7 +5,7 @@ import com.diquemc.nick.command.RemoveNickCommand;
 import com.diquemc.nick.command.SetNickCommand;
 import com.diquemc.nick.listener.LoginListener;
 import com.diquemc.nick.manager.NickManager;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.UUID;

@@ -4,8 +4,10 @@ import com.diquemc.nick.DiqueMCNick;
 import com.diquemc.nick.Messages;
 import com.diquemc.nick.manager.NickManager;
 import com.diquemc.nick.manager.PlayerManager;
+import com.diquemc.utils.ChatUtil;
+import com.diquemc.utils.DiqueMCUtils;
 import me.winterguardian.jsonconverter.JsonMessageSender;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,10 +27,14 @@ public class SetNickCommand implements CommandExecutor {
     }
 
     private boolean isAllowedNick(String playerName, String nickName) {
-        String nick = ChatColor.translateAlternateColorCodes('&', nickName);
+        String nick = ChatUtil.translateColorCodes(nickName);
         nick = nick.replace(ChatColor.MAGIC.toString(), "&k");
         nick = ChatColor.stripColor(nick);
         return nick.toLowerCase().contains(playerName.toLowerCase());
+    }
+
+    private String processNick(String nickName) {
+        return ChatUtil.transformHexColor(nickName);
     }
 
     private boolean runAsPlayer(Player player, String nickName) {
@@ -40,6 +46,7 @@ public class SetNickCommand implements CommandExecutor {
         if(nickName.equals(playerName)) {
             return new RemoveNickCommand().runAsPlayer(player);
         }
+        nickName = processNick(nickName);
         if (!isAllowedNick(playerName, nickName)) {
             player.sendMessage(Messages.NICK_DOESNT_CONTAIN_NAME);
             return true;
@@ -63,7 +70,7 @@ public class SetNickCommand implements CommandExecutor {
         if(nickName.equals(playerName)) {
             return new RemoveNickCommand().runAsAdmin(commandSender, playerName);
         }
-
+        nickName = processNick(nickName);
         NickManager.setNickForPlayer(playerName, nickName);
         commandSender.sendMessage(Messages.NICK_CHANGED(playerName, nickName));
         return true;
@@ -92,8 +99,8 @@ public class SetNickCommand implements CommandExecutor {
                 commandSender.sendMessage(ChatColor.YELLOW + "No tienes un nick asignado actualmente");
             } else {
                 String message = "[{\"text\":\"Tu nick actual es: \",\"color\":\"green\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"Click para copiar el comando\",\"color\":\"green\"},\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"/nick {currentNick}\"},\"extra\":[{\"text\":\"{currentNickConverted}\",\"color\":\"aqua\"},{\"text\":\"(\",\"color\":\"green\"},{\"text\":\"/nick {currentNick}\",\"color\":\"aqua\"},{\"text\":\")\",\"color\":\"green\"}]}]";
-                message = message.replace("{currentNick}", currentNick);
-                message = message.replace("{currentNickConverted}", ChatColor.translateAlternateColorCodes('&', currentNick));
+                message = message.replace("{currentNick}", ChatUtil.reverseTransformHexColor(currentNick));
+                message = message.replace("{currentNickConverted}", ChatUtil.translateColorCodes(currentNick));
 //                String message = ChatColor.GREEN + "Tu nick actual es: " + ChatColor.AQUA + ChatColor.translateAlternateColorCodes('&', currentNick) + ChatColor.GREEN + "(" + ChatColor.AQUA + "/nick " + currentNick + ChatColor.GREEN + ")";
 //                String json = JsonConverter.toJson(message, "show_text", ChatColor.GREEN + "Click para copiar el comando", "suggest_command", "/nick " + currentNick, "");
                 JsonMessageSender.sendSafeJsonChatMessage((Player) commandSender, message);
