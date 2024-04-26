@@ -1,7 +1,7 @@
 name: DiqueMCNick
 main: com.diquemc.nick.DiqueMCNick
 version: "1.0"
-api-version: "1.15"
+api-version: "1.20"
 author: Hector22x
 description: Nick Management
 depend: [DiqueMCJedis, DiqueMCUtils]
